@@ -1,2 +1,3 @@
 brain
 .sconsign.dblite
+src/*.o
