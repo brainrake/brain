@@ -16,7 +16,7 @@ dependencies:
 building
 --------
 
-on debian-based systems (tested on ubuntu 10.10)
+on debian-based systems (tested on ubuntu 10.10)::
 
     sudo apt-get install scons libgl1-mesa-dev libglu1-mesa-dev libsfml-dev
     scons
@@ -24,5 +24,7 @@ on debian-based systems (tested on ubuntu 10.10)
 
 running
 -------
+
+::
 
     ./brain
