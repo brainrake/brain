@@ -4,9 +4,9 @@
 Layer::Layer(){
     this->_ready = false;
     
-    this->info.r=0;
-    this->info.g=0;
-    this->info.b=0;
+    this->info.r=1;
+    this->info.g=1;
+    this->info.b=1;
     this->info.a=1;
     this->info.width=0;
     this->info.height=0;
@@ -19,6 +19,8 @@ Layer::Layer(){
     this->info.sx=1;
     this->info.sy=1;
     this->info.sz=1;
+    this->info.blending=0;
+    this->source=0;
 }
 
 
@@ -31,8 +33,9 @@ void Layer::set_source(Source* _source){
     this->close_render();
     
     this->source = _source;
-    this->info.height = this->source->info.height;
-    this->info.width  = this->source->info.width;
-    
+    if ( this->source ){
+        this->info.height = this->source->info.height;
+        this->info.width  = this->source->info.width;
+    }
     this->init_render();
 }

@@ -13,6 +13,8 @@ struct LayerInfo{
     GLfloat tx,ty,tz;   //translation
     GLfloat rx,ry,rz;   //rotation
     GLfloat sx,sy,sz;   //scaling
+    
+    unsigned char blending;
 };
 
 
@@ -23,7 +25,8 @@ private:
 
     bool _ready;
     
-
+    GLuint texture;
+    
     //front and back buffers
     GLbyte* buffer0;
     GLbyte* buffer1;

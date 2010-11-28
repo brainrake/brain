@@ -9,9 +9,9 @@ int main (int argc, char**argv){
     
     Layer* layer1 = new Layer();
     layer1->set_source(source1);
-    layer1->info.r=0.5;
     
     brain->add_layer(layer1);
+    
     
 
     Source* source2 = new Source();
@@ -19,9 +19,6 @@ int main (int argc, char**argv){
     
     Layer* layer2 = new Layer();
     layer2->set_source(source2);
-    layer2->info.g=0.5;
-    
-    brain->add_layer(layer2);
 
 
 

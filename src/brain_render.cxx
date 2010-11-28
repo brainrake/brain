@@ -7,9 +7,9 @@
 void Brain::init_render(){
     //display settings
     sf::WindowSettings Settings;
-    Settings.DepthBits         = 24; // Request a 24 bits depth buffer
-    Settings.StencilBits       = 8;  // Request a 8 bits stencil buffer
-    Settings.AntialiasingLevel = 2;  // Request 2 levels of antialiasing
+    Settings.DepthBits = 24;
+    Settings.StencilBits = 8;
+    //Settings.AntialiasingLevel = 2;
     
     //create window
     window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "brain::output",sf::Style::Close, Settings);
@@ -31,7 +31,6 @@ void Brain::init_render(){
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
     window->Display();
 }
 
@@ -48,4 +47,5 @@ void Brain::render(){
 }
 
 void Brain::close_render(){
+    //TODO
 }

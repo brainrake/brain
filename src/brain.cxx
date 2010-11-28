@@ -16,6 +16,7 @@ Brain::Brain(){
 
 Brain::~Brain(){
     this->close_render();
+    //TODO
 }
 
 void Brain::run(){

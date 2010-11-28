@@ -1,6 +1,6 @@
 Program(
     'brain', 
     Glob('src/*.cxx'), 
-    LIBS=['GL','sfml-window','sfml-graphics'],
+    LIBS=['GL','sfml-window','sfml-graphics','avformat','avcodec','swscale'],
     CXXFLAGS='-g -D__STDC_CONSTANT_MACROS'
 )
