@@ -1,6 +1,12 @@
 #include "source.hxx"
 
 int Source::ffmpeg_init(){
+
+//ffmpeg init mutex
+    static pthread_mutex_t init_mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock (&init_mutex);
+////
+    
     av_register_all();
 
     // Open video file
@@ -46,6 +52,39 @@ int Source::ffmpeg_init(){
 
     // Allocate video frame
     pFrame=avcodec_alloc_frame();
+    
+
+
+
+
+
+    buf_front=(void*)malloc(4*this->info.width*this->info.height);
+    buf_back=(void*)malloc(4*this->info.width*this->info.height);
+    
+
+
+    pthread_mutex_unlock (&init_mutex);
+
+
+
+    // Set up colorspace conversion
+    int w = pCodecCtx->width;
+    int h = pCodecCtx->height;
+    img_convert_ctx = sws_getContext(w, h,
+        //is->video_st->codec->pix_fmt,
+        pCodecCtx->pix_fmt,
+        w, h,
+        PIX_FMT_RGBA,
+        //PIX_FMT_YUV420P,
+        SWS_BICUBIC,
+        NULL, NULL, NULL);
+
+    if(img_convert_ctx == NULL) {
+        fprintf(stderr, "[Source::ffmpeg_init] Cannot initialize the conversion context!\n");
+        return 1;
+    }
+
+
 
     return 0;
 }
@@ -69,27 +108,8 @@ int Source::ffmpeg_decode_frame(){
             // Did we get a video frame?
             if(frameFinished) {
 
-                static struct SwsContext *img_convert_ctx;
 
 
-                // Convert the image to RGBA
-                if(img_convert_ctx == NULL) {
-                    int w = pCodecCtx->width;
-                    int h = pCodecCtx->height;
-                    img_convert_ctx = sws_getContext(w, h,
-                        //is->video_st->codec->pix_fmt,
-                        pCodecCtx->pix_fmt,
-                        w, h,
-                        PIX_FMT_RGBA,
-                        //PIX_FMT_YUV420P,
-                        SWS_BICUBIC,
-                        NULL, NULL, NULL);
-
-                    if(img_convert_ctx == NULL) {
-                        fprintf(stderr, "Cannot initialize the conversion context!\n");
-                        exit(1);
-                    }
-                }
 
                 int line=pCodecCtx->width*4;
                 sws_scale(img_convert_ctx, pFrame->data,
@@ -103,10 +123,10 @@ int Source::ffmpeg_decode_frame(){
                 av_free_packet(&packet);
 
 
-                break;
+                return 0;
 
             }
         }
     }
-    return 0;
+    return 1;
 }

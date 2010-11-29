@@ -20,6 +20,7 @@ int main (int argc, char**argv){
     Layer* layer2 = new Layer();
     layer2->set_source(source2);
 
+    brain->add_layer(layer2);
 
 
     brain->run();

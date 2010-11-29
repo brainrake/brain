@@ -32,6 +32,7 @@ private:
     void init_render();
     void render();
     void close_render();
+    void render_fps();
 
     void step();
 

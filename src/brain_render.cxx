@@ -17,7 +17,7 @@ void Brain::init_render(){
     //preserve state when drawing via SFML
     window->PreserveOpenGLStates(true);
     
-    window->SetFramerateLimit(60);
+    window->SetFramerateLimit(100);
 
     // Set color and depth clear value
     glClearDepth(1.0f);
@@ -43,8 +43,36 @@ void Brain::render(){
         }
     }
 
+    this->render_fps();
+
     window->Display();
 }
+
+void Brain::render_fps(){
+    static sf::Clock Clock;
+    static double time=0;
+    static double fps=0;
+
+    static int cnt=0;
+    cnt++;
+
+    if(cnt==10){
+        cnt=0;
+        double time2=Clock.GetElapsedTime();
+        double dif=time2-time;
+        time=time2;
+        fps=10/dif;
+    }
+
+
+    char str[255];
+    sprintf(str,"%03.2f fps",fps);
+    sf::String Text;
+    Text.SetText(str);
+    Text.SetColor(sf::Color(255, 255, 255));
+    window->Draw(Text);
+}
+
 
 void Brain::close_render(){
     //TODO

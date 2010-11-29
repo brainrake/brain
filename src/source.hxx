@@ -25,6 +25,8 @@ private:
     SourceInfo info;
     char* filename;
 
+    void set_title(char* _filename);
+
     bool _stop;
     void run();
     void step();
@@ -46,6 +48,7 @@ private:
     AVPacket        packet;
     int             frameFinished;
     float           aspect_ratio;
+    struct SwsContext *img_convert_ctx;
   
 public:
     Source();

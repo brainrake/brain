@@ -25,29 +25,25 @@ Source::Source(char* _filename){
     strcpy(this->filename, _filename);
     
     //set title
-    if(strrchr(_filename,'\\')){strncat(info.title,strrchr(_filename,'\\'),63);}
-    else if(strrchr(_filename,'/')){strncat(info.title,strrchr(_filename,'/'),63);}
-    else if(strlen(_filename)>63){strncat(info.title,&(_filename[strlen(_filename)-63]),63);}
-    else{strncat(info.title, _filename, 63);}
-    
-    
-    if( !this->ffmpeg_init()){
-    } else {
-        printf("[Source::Source] Error initializing ffmpeg\n");
-    }
-    
-    buf_front=(void*)malloc(4*this->info.width*this->info.height);
-    buf_back=(void*)malloc(4*this->info.width*this->info.height);
-    
+    this->set_title(_filename);
+
     //start thread
     if ( ! pthread_create(&(this->thread), NULL, Source::thread_start, (void *)this) ){
-        printf("[Source::Source] Created source thread: %s\n",_filename);
+        printf("[Source::Source] Created source thread: %s\n",info.title);
     } else {
         printf("[Source::Source] Error creating source thread: %s\n",_filename);
     }
 }
 
 Source::~Source(){
+}
+
+
+void Source::set_title(char* _filename){
+    if(strrchr(_filename,'\\')){strncat(info.title,strrchr(_filename,'\\'),63);}
+    else if(strrchr(_filename,'/')){strncat(info.title,strrchr(_filename,'/'),63);}
+    else if(strlen(_filename)>63){strncat(info.title,&(_filename[strlen(_filename)-63]),63);}
+    else{strncat(info.title, _filename, 63);}
 }
 
 
@@ -59,6 +55,12 @@ void* Source::thread_start(void* _source){
 
 
 void Source::run(){
+    if( !this->ffmpeg_init()){
+    } else {
+        printf("[Source::Source] Error initializing ffmpeg\n");
+    }
+    
+    
     while(!this->_stop){
         this->step();
     }
