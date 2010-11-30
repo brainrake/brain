@@ -40,10 +40,13 @@ Source::~Source(){
 
 
 void Source::set_title(char* _filename){
-    if(strrchr(_filename,'\\')){strncat(info.title,strrchr(_filename,'\\'),63);}
-    else if(strrchr(_filename,'/')){strncat(info.title,strrchr(_filename,'/'),63);}
-    else if(strlen(_filename)>63){strncat(info.title,&(_filename[strlen(_filename)-63]),63);}
-    else{strncat(info.title, _filename, 63);}
+    char str[strlen(_filename)+1];
+    char* dotpos = strrchr(_filename,'.');
+    strncpy(str,_filename,dotpos-_filename);
+    if(strrchr(str,'\\')){strncat(info.title,strrchr(str,'\\')+1,63);}
+    else if(strrchr(str,'/')){strncat(info.title,strrchr(str,'/')+1,63);}
+    else if(strlen(str)>63){strncat(info.title,&(_filename[strlen(str)-63]),63);}
+    else{strncat(info.title, str, 63);}
 }
 
 
