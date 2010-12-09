@@ -31,6 +31,18 @@ void Brain::init_render(){
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+    //set up projection
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(90,WIDTH/(double)HEIGHT,0.2,100);
+    gluLookAt( 0,0,1,
+               0,0,0,
+               0,1,0 );
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+
     window->Display();
 }
 

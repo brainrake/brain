@@ -42,14 +42,17 @@ void Layer::render(){
         glEnable(GL_TEXTURE_2D);
     }
 
+    //TODO: store this
+    float aspect = this->source->info.width / (float) this->source->info.height;
+
     //draw rectangle
     glBegin( GL_QUADS );
         glColor4f(info.r,info.g,info.b,info.a);
         //TODO: use aspect ratio info from source
-        glTexCoord2d(0,1); glVertex3d(-1,-1,0);
-        glTexCoord2d(1,1); glVertex3d( 1,-1,0);
-        glTexCoord2d(1,0); glVertex3d( 1, 1,0);
-        glTexCoord2d(0,0); glVertex3d(-1, 1,0);
+        glTexCoord2d(0,1); glVertex3d(-aspect,-1,0);
+        glTexCoord2d(1,1); glVertex3d( aspect,-1,0);
+        glTexCoord2d(1,0); glVertex3d( aspect, 1,0);
+        glTexCoord2d(0,0); glVertex3d(-aspect, 1,0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
