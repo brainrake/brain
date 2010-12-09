@@ -21,7 +21,7 @@ void Brain::input(){
             glViewport(0, 0, Event.Size.Width, Event.Size.Height);
         }
         if (Event.Type == sf::Event::KeyPressed){
-            if ( !Event.Key.Shift ){
+            if ( !Event.Key.Shift and !Event.Key.Control){
                 switch(Event.Key.Code){
                     case sf::Key::F1: if(this->layers[0]){selected_layer=0;} break;
                     case sf::Key::F2: if(this->layers[1]){selected_layer=1;} break;
@@ -52,6 +52,13 @@ void Brain::input(){
                     case sf::Key::Right: this->layers[selected_layer]->info.sx+=0.1;break;
                     case sf::Key::Down:  this->layers[selected_layer]->info.sy-=0.1;break;
                     case sf::Key::Up:    this->layers[selected_layer]->info.sy+=0.1;break;
+                }
+            } else if ( Event.Key.Control ){ 
+                switch(Event.Key.Code){
+                    case sf::Key::Left:  this->layers[selected_layer]->info.rx-=1;break;
+                    case sf::Key::Right: this->layers[selected_layer]->info.rx+=1;break;
+                    case sf::Key::Down:  this->layers[selected_layer]->info.rz-=1;break;
+                    case sf::Key::Up:    this->layers[selected_layer]->info.rz+=1;break;
                 }
             }
         }

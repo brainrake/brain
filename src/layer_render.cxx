@@ -20,9 +20,9 @@ void Layer::render(){
 
     //apply translation, rotation and scaling
     glTranslatef(info.tx,info.ty,info.tz);
-    glRotatef(0,1,0,info.ry);
-    glRotatef(1,0,0,info.rx);
-    glRotatef(0,0,1,info.rz);
+    glRotatef(info.ry,0,1,0);
+    glRotatef(info.rx,1,0,0);
+    glRotatef(info.rz,0,0,1);
     glScalef(info.sx,info.sy,info.sz);
 
 
