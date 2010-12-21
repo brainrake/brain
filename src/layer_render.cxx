@@ -14,8 +14,6 @@ void Layer::init_render(){
 
 
 void Layer::render(){
-    glActiveTexture(texture);
-    
     glPushMatrix();
 
     //apply translation, rotation and scaling
@@ -26,18 +24,18 @@ void Layer::render(){
     glScalef(info.sx,info.sy,info.sz);
 
 
-    //NOTE: NTSC luminosity color scaling: red 0.299; green 0.587; blue 0.114;
     //TODO: set blending mode
     switch (info.blending){
-        case 1: //luma key
+        case 1: //inverse alpha
+            glBlendFunc (GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA); break;
         case 0:
-        default://alpha blending
-        ;
+        default://alpha
+            glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); break;
     }
 
-
-    
+    //texture
     if (this->source and this->source->buf_front){
+        glActiveTexture(texture);
         glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, this->source->info.width, this->source->info.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->source->buf_front);
         glEnable(GL_TEXTURE_2D);
     }
@@ -46,8 +44,8 @@ void Layer::render(){
     float aspect = this->source->info.width / (float) this->source->info.height;
 
     //draw rectangle
+    glColor4f(info.r,info.g,info.b,info.a);
     glBegin( GL_QUADS );
-        glColor4f(info.r,info.g,info.b,info.a);
         //TODO: use aspect ratio info from source
         glTexCoord2d(0,1); glVertex3d(-aspect,-1,0);
         glTexCoord2d(1,1); glVertex3d( aspect,-1,0);
