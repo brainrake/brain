@@ -128,5 +128,8 @@ int Source::ffmpeg_decode_frame(){
             }
         }
     }
-    return 1;
+
+    av_seek_frame(pFormatCtx, -1, 0, 0);
+    return 0;
+    //return 1;
 }
