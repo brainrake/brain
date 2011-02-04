@@ -21,11 +21,17 @@ Source::Source(char* _filename){
     this->buf_front=0;
     this->buf_back=0;
     
-    this->filename = new char[strlen(_filename)];
+    this->filename = new char[strlen(_filename)+1];
     strcpy(this->filename, _filename);
     
     //set title
     this->set_title(_filename);
+
+
+    if( !this->ffmpeg_init()){
+    } else {
+        printf("[Source::Source] Error initializing ffmpeg\n");
+    }
 
     //start thread
     if ( ! pthread_create(&(this->thread), NULL, Source::thread_start, (void *)this) ){
@@ -43,6 +49,7 @@ void Source::set_title(char* _filename){
     char str[strlen(_filename)+1];
     char* dotpos = strrchr(_filename,'.');
     strncpy(str,_filename,dotpos-_filename);
+    str[dotpos-_filename]=0;
     if(strrchr(str,'\\')){strncat(info.title,strrchr(str,'\\')+1,63);}
     else if(strrchr(str,'/')){strncat(info.title,strrchr(str,'/')+1,63);}
     else if(strlen(str)>63){strncat(info.title,&(_filename[strlen(str)-63]),63);}
@@ -58,11 +65,12 @@ void* Source::thread_start(void* _source){
 
 
 void Source::run(){
+    /*
     if( !this->ffmpeg_init()){
     } else {
         printf("[Source::Source] Error initializing ffmpeg\n");
     }
-    
+    */
     
     while(!this->_stop){
         this->step();
