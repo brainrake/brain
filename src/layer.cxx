@@ -3,6 +3,7 @@
 
 Layer::Layer(){
     this->_ready = false;
+    this->_texture_ready = false;
     
     this->info.r=1;
     this->info.g=1;

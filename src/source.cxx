@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 
+
 Source::Source(){
     this->_stop = false;
     info.height = 0;
@@ -12,6 +13,7 @@ Source::Source(){
     this->buf_back=0;
     this->filename = NULL;
 }
+
 
 Source::Source(char* _filename){
     this->_stop = false;
@@ -34,6 +36,7 @@ Source::Source(char* _filename){
         printf("[Source::Source] Error creating source thread: %s\n",_filename);
     }
 }
+
 
 Source::~Source(){
 }
@@ -66,6 +69,7 @@ void Source::run(){
     }
 }
 
+
 void Source::step(){
     if(!this->ffmpeg_decode_frame()){
     } else {
@@ -73,6 +77,7 @@ void Source::step(){
     }
     this->swap_buffers();
 }
+
 
 void Source::swap_buffers(){
     void* buf;

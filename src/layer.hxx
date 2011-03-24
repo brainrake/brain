@@ -24,6 +24,7 @@ private:
     Source* source;
 
     bool _ready;
+    bool _texture_ready;
     
     GLuint texture;
     

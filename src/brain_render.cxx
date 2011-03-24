@@ -30,7 +30,6 @@ void Brain::init_render(){
     // Enable blending
     glEnable (GL_BLEND);
 
-
     //set up projection
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -40,7 +39,6 @@ void Brain::init_render(){
                0,1,0 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
 
     window->Display();
 }
