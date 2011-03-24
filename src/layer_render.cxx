@@ -35,8 +35,13 @@ void Layer::render(){
 
     //texture
     if (this->source and this->source->buf_front){
-        glActiveTexture(texture);
-        glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, this->source->info.width, this->source->info.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->source->buf_front);
+        glActiveTexture(this->texture);
+        if(!this->_texture_ready){
+            this->_texture_ready = true;
+            glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, this->source->info.width, this->source->info.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->source->buf_front);
+        } else {
+            glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, this->source->info.width, this->source->info.height, GL_RGBA, GL_UNSIGNED_BYTE, this->source->buf_front);
+        }
         glEnable(GL_TEXTURE_2D);
     }
 
