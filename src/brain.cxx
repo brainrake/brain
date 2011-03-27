@@ -1,5 +1,6 @@
 #include "brain.hxx"
 
+
 Brain::Brain(){
     _stop = false;
     
@@ -14,10 +15,12 @@ Brain::Brain(){
     this->init_render();
 }
 
+
 Brain::~Brain(){
     this->close_render();
     //TODO
 }
+
 
 void Brain::run(){
     while ( ! this->_stop ){
@@ -25,10 +28,12 @@ void Brain::run(){
     }
 }
 
+
 void Brain::step(){
     this->input();
     this->render();
 }
+
 
 void Brain::add_source(Source* source){
     unsigned int i;
@@ -37,10 +42,12 @@ void Brain::add_source(Source* source){
             break;
         }
     }
+
     if (i<MAX_SOURCES){
         this->sources[i] = source;
     }
 }
+
 
 void Brain::add_layer(Layer* layer){
     unsigned int i;
@@ -49,6 +56,7 @@ void Brain::add_layer(Layer* layer){
             break;
         }
     }
+
     if (i<MAX_LAYERS){
         this->layers[i] = layer;
     }

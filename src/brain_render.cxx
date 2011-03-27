@@ -43,6 +43,7 @@ void Brain::init_render(){
     window->Display();
 }
 
+
 void Brain::render(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -56,6 +57,7 @@ void Brain::render(){
 
     window->Display();
 }
+
 
 void Brain::render_fps(){
     static sf::Clock Clock;
