@@ -7,6 +7,8 @@
 #include "source.hxx"
 
 struct LayerInfo{
+    GLuint id;
+    
     GLuint width;
     GLuint height;
     GLfloat r,g,b,a;    //color, alpha

@@ -80,7 +80,7 @@ int Source::ffmpeg_init(){
         NULL, NULL, NULL);
 
     if(img_convert_ctx == NULL) {
-        fprintf(stderr, "[Source::ffmpeg_init] Cannot initialize the conversion context!\n");
+        fprintf(stderr, "[Source::ffmpeg_init] Cannot initialize the image conversion context!\n");
         return 1;
     }
 

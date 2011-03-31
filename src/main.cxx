@@ -10,7 +10,6 @@ int main (int argc, char**argv){
     }
 
     for (int i=1; i < argc; i++) {
-        printf("%d %s\n", i, argv[i]);
         Source* source = new Source(argv[i]);
         brain->add_source(source);
     }

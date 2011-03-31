@@ -1,9 +1,10 @@
 #include "layer.hxx"
 
-
 Layer::Layer(){
     this->_ready = false;
     this->_texture_ready = false;
+
+    this->info.id=-1;
     
     this->info.r=1;
     this->info.g=1;
@@ -43,5 +44,8 @@ void Layer::set_source(Source* _source){
         this->info.height = this->source->info.height;
         this->info.width  = this->source->info.width;
     }
+
+    printf("Layer %d: set_source: %s\n", this->info.id, source->info.title);
+    
     this->init_render();
 }

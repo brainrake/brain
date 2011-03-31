@@ -4,20 +4,20 @@
 #define HEIGHT 600
 
 
-void Brain::init_render(){
+void Brain::init_render() {
     //display settings
     sf::WindowSettings Settings;
     Settings.DepthBits = 24;
     Settings.StencilBits = 8;
     //Settings.AntialiasingLevel = 2;
-    
+
     //create window
     window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "brain::output",sf::Style::Close, Settings);
 
     //preserve state when drawing via SFML
     window->PreserveOpenGLStates(true);
     
-    window->SetFramerateLimit(100);
+    window->SetFramerateLimit(200);
 
     // Set color and depth clear value
     glClearDepth(1.0f);
@@ -44,9 +44,8 @@ void Brain::init_render(){
 }
 
 
-void Brain::render(){
+void Brain::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
     for(unsigned int i=0; i<MAX_LAYERS;i++){
         if(this->layers[i]){
             this->layers[i]->render();
@@ -59,7 +58,7 @@ void Brain::render(){
 }
 
 
-void Brain::render_fps(){
+void Brain::render_fps() {
     static sf::Clock Clock;
     static double time=0;
     static double fps=0;
@@ -85,6 +84,6 @@ void Brain::render_fps(){
 }
 
 
-void Brain::close_render(){
+void Brain::close_render() {
     //TODO
 }

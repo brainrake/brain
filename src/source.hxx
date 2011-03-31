@@ -5,6 +5,8 @@
 #include <GL/gl.h>
 #include <pthread.h>
 
+#include <SFML/Window.hpp>
+
 extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
@@ -13,6 +15,7 @@ extern "C" {
 
 
 struct SourceInfo{
+    GLuint id;
     char title[64];
     GLuint width;
     GLuint height;
@@ -49,6 +52,13 @@ private:
     int             frameFinished;
     float           aspect_ratio;
     struct SwsContext *img_convert_ctx;
+
+//fps
+    sf::Clock Clock;
+    double time;
+    double fps;
+    int cnt;
+
   
 public:
     Source();

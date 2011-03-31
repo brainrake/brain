@@ -45,6 +45,11 @@ void Brain::input(){
                     case sf::Key::E:  if(this->sources[2]){this->layers[selected_layer]->set_source(this->sources[2]);} break;
                     case sf::Key::R:  if(this->sources[3]){this->layers[selected_layer]->set_source(this->sources[3]);} break;
                     case sf::Key::T:  if(this->sources[4]){this->layers[selected_layer]->set_source(this->sources[4]);} break;
+                    case sf::Key::A:  if(this->sources[5]){this->layers[selected_layer]->set_source(this->sources[5]);} break;
+                    case sf::Key::S:  if(this->sources[6]){this->layers[selected_layer]->set_source(this->sources[6]);} break;
+                    case sf::Key::D:  if(this->sources[7]){this->layers[selected_layer]->set_source(this->sources[7]);} break;
+                    case sf::Key::F:  if(this->sources[8]){this->layers[selected_layer]->set_source(this->sources[8]);} break;
+                    case sf::Key::G:  if(this->sources[9]){this->layers[selected_layer]->set_source(this->sources[9]);} break;
                 }
             } else if ( Event.Key.Shift and !Event.Key.Control){ 
                 switch(Event.Key.Code){
@@ -71,3 +76,13 @@ void Brain::input(){
         }
     }
 }
+
+
+//TODO
+/*
+void set_active_layer() {
+}
+
+void set_source() {
+}
+*/

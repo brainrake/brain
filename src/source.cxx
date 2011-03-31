@@ -12,6 +12,11 @@ Source::Source(){
     this->buf_front=0;
     this->buf_back=0;
     this->filename = NULL;
+
+    //fps
+    time=0;
+    fps=0;
+    cnt=0;
 }
 
 
@@ -36,12 +41,26 @@ Source::Source(char* _filename){
     }
 
     //start thread
-    if ( ! pthread_create(&(this->thread), NULL, Source::thread_start, (void *)this) ){
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    sched_param schedparam;
+    schedparam.sched_priority = -10;
+    int ret = pthread_attr_setschedparam(&attr, &schedparam);
+    printf("ret %d\n",ret);
+
+    if ( ! pthread_create(&(this->thread), &attr, Source::thread_start, (void *)this) ){
         printf("[Source::Source] Created source thread: %s\n",info.title);
     } else {
         printf("[Source::Source] Error creating source thread: %s\n",_filename);
     }
 }
+
+
+/*
+       int pthread_create(pthread_t *restrict thread,
+              const pthread_attr_t *restrict attr,
+              void *(*start_routine)(void*), void *restrict arg);
+*/
 
 
 Source::~Source(){
@@ -68,13 +87,6 @@ void* Source::thread_start(void* _source){
 
 
 void Source::run(){
-    /*
-    if( !this->ffmpeg_init()){
-    } else {
-        printf("[Source::Source] Error initializing ffmpeg\n");
-    }
-    */
-    
     while(!this->_stop){
         this->step();
     }
@@ -87,12 +99,27 @@ void Source::step(){
         this->_stop = true;
     }
     this->swap_buffers();
+
+
+
+///fps
+    cnt++;
+
+    if(cnt>=50){
+        cnt=0;
+        double time2=Clock.GetElapsedTime();
+        double dif=time2-time;
+        time=time2;
+        fps=50.0/dif;
+        printf("%03.2f fps  %s\n",fps,this->info.title);
+    }
+
 }
 
 
 void Source::swap_buffers(){
     void* buf;
-    buf=this->buf_back;
-    this->buf_back=this->buf_front;
-    this->buf_front=buf;
+    buf = this->buf_back;
+    this->buf_back = this->buf_front;
+    this->buf_front = buf;
 }

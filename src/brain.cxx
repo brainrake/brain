@@ -45,6 +45,7 @@ void Brain::add_source(Source* source){
 
     if (i<MAX_SOURCES){
         this->sources[i] = source;
+        source->info.id = i;
     }
 }
 
@@ -59,5 +60,6 @@ void Brain::add_layer(Layer* layer){
 
     if (i<MAX_LAYERS){
         this->layers[i] = layer;
+        layer->info.id = i;
     }
 }
