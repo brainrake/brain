@@ -38,14 +38,14 @@ Layer::~Layer(){
 
 void Layer::set_source(Source* _source){
     this->close_render();
-    
     this->source = _source;
-    if ( this->source ){
+
+    if (this->source) {
         this->info.height = this->source->info.height;
         this->info.width  = this->source->info.width;
-    }
 
-    printf("Layer %d: set_source: %s\n", this->info.id, source->info.title);
-    
-    this->init_render();
+        printf("Layer %d: set_source: %s\n", this->info.id, source->info.title);
+        
+        this->init_render();
+    }
 }

@@ -10,6 +10,10 @@ dependencies:
 - ffmpeg
 - pthreads
 - SFML - for windowing and input
+
+
+build system:
+
 - scons
 
 
