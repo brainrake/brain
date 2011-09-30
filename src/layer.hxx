@@ -4,7 +4,10 @@
 #include <pthread.h>
 #include <GL/gl.h>
 
+#include "brain.hxx"
 #include "source.hxx"
+
+class Brain;
 
 struct LayerInfo{
     GLuint id;
@@ -17,32 +20,32 @@ struct LayerInfo{
     GLfloat sx,sy,sz;   //scaling
     
     unsigned char blending;
+
+    double fps;
 };
 
 
 class Layer{
 private:
+    Brain* brain;
 
     Source* source;
 
     bool _ready;
     bool _texture_ready;
-    
+
+    double _last_frame_time;
+
+    void step_frame();
+
     GLuint texture;
     
-    //front and back buffers
-    GLbyte* buffer0;
-    GLbyte* buffer1;
-
-    pthread_mutex_t buffer_mutex;
-
     void init_render();
     void close_render();
 
-
 public:
 
-    Layer();
+    Layer(Brain* brain);
     ~Layer();
 
     LayerInfo info;

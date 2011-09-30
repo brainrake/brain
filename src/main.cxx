@@ -5,7 +5,7 @@ int main (int argc, char**argv) {
 
 
     for (int i=0; i < 4; i++) {
-        Layer* layer = new Layer();
+        Layer* layer = new Layer(brain);
         brain->add_layer(layer);
     }
 

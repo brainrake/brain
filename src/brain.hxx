@@ -1,16 +1,19 @@
 #ifndef __BRAIN_HXX__
 #define __BRAIN_HXX__
 
-#include "layer.hxx"
-#include "source.hxx"
-
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
+#include "layer.hxx"
+#include "source.hxx"
 
 
 
 #define MAX_LAYERS 16
 #define MAX_SOURCES 16
+
+
+class Layer;
 
 
 struct BrainInfo{

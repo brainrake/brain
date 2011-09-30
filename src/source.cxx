@@ -34,11 +34,14 @@ Source::Source(char* _filename) {
     //set title
     this->set_title(_filename);
 
-
     if (!this->ffmpeg_init()) {
     } else {
         printf("[Source::Source] Error initializing ffmpeg\n");
     }
+
+    //initialize buffer swap mutex and cv
+    pthread_mutex_init(&(this->buf_mutex), NULL);
+    pthread_cond_init (&(this->buf_cv), NULL);
 
     //start thread
     pthread_attr_t attr;
@@ -98,11 +101,18 @@ void Source::step() {
     } else {
         this->_stop = true;
     }
-    this->swap_buffers();
+
+    this->log_fps();
+
+    //block waiting for buffer swap
+    pthread_mutex_lock(&(this->buf_mutex));
+    pthread_cond_wait(&(this->buf_cv), &(this->buf_mutex));
+    pthread_mutex_unlock(&(this->buf_mutex));
+}
 
 
 
-///fps
+void Source::log_fps() {
     cnt++;
 
     if (cnt>=50) {
@@ -113,13 +123,18 @@ void Source::step() {
         fps=50.0/dif;
         printf("%03.2f fps  %s\n",fps,this->info.title);
     }
-
 }
 
 
+//called from main thread
 void Source::swap_buffers() {
     void* buf;
     buf = this->buf_back;
     this->buf_back = this->buf_front;
     this->buf_front = buf;
+
+    //unblock source thread
+    pthread_mutex_lock(&(this->buf_mutex));
+    pthread_cond_signal(&(this->buf_cv));
+    pthread_mutex_unlock(&(this->buf_mutex));
 }

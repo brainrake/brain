@@ -38,9 +38,15 @@ private:
     void* buf_front;
     void* buf_back;
 
+    //thread stuff
     pthread_t thread;
     static void* thread_start(void* _source);
-    
+
+    //buffer swap mutex and cv
+    pthread_mutex_t buf_mutex;
+    pthread_cond_t buf_cv;
+
+    //ffmpeg stuff
     int ffmpeg_init();
     int ffmpeg_decode_frame();
     AVFormatContext *pFormatCtx;
@@ -58,7 +64,7 @@ private:
     double time;
     double fps;
     int cnt;
-
+    void log_fps();
   
 public:
     Source();
