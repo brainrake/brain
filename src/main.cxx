@@ -1,6 +1,6 @@
 #include "brain.hxx"
 
-int main (int argc, char**argv){
+int main (int argc, char**argv) {
     Brain* brain = new Brain();
 
 

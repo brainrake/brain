@@ -46,8 +46,8 @@ void Brain::init_render() {
 
 void Brain::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    for(unsigned int i=0; i<MAX_LAYERS;i++){
-        if(this->layers[i]){
+    for (unsigned int i=0; i<MAX_LAYERS; i++) {
+        if (this->layers[i]) {
             this->layers[i]->render();
         }
     }
@@ -62,7 +62,7 @@ void Brain::render_fps() {
     static int i = 0;
     static double d = 0;
     static double fps = 0;
-    if( i == 100){  fps = 100/d; d = 0; i = 0; }
+    if (i == 100) { fps = 100/d; d = 0; i = 0; }
     d += this->delta;
     i++;
 

@@ -1,6 +1,6 @@
 #include "source.hxx"
 
-int Source::ffmpeg_init(){
+int Source::ffmpeg_init() {
 
 //ffmpeg init mutex
     static pthread_mutex_t init_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -10,11 +10,11 @@ int Source::ffmpeg_init(){
     av_register_all();
 
     // Open video file
-    if(av_open_input_file(&pFormatCtx, this->filename, NULL, 0, NULL)!=0)
+    if (av_open_input_file(&pFormatCtx, this->filename, NULL, 0, NULL)!=0)
     return -1; // Couldn't open file
 
     // Retrieve stream information
-    if(av_find_stream_info(pFormatCtx)<0)
+    if (av_find_stream_info(pFormatCtx)<0)
     return -1; // Couldn't find stream information
 
     // Dump information about file onto standard error
@@ -23,13 +23,13 @@ int Source::ffmpeg_init(){
 
     // Find the first video stream
     videoStream=-1;
-    for(i=0; i<pFormatCtx->nb_streams; i++){
-        if(pFormatCtx->streams[i]->codec->codec_type==CODEC_TYPE_VIDEO) {
+    for (i=0; i<pFormatCtx->nb_streams; i++) {
+        if (pFormatCtx->streams[i]->codec->codec_type==CODEC_TYPE_VIDEO) {
             videoStream=i;
             break;
         }
     }
-    if(videoStream==-1)
+    if (videoStream==-1)
         return -1; // Didn't find a video stream
 
     // Get a pointer to the codec context for the video stream
@@ -37,13 +37,13 @@ int Source::ffmpeg_init(){
 
     // Find the decoder for the video stream
     pCodec=avcodec_find_decoder(pCodecCtx->codec_id);
-    if(pCodec==NULL) {
+    if (pCodec==NULL) {
     fprintf(stderr, "Unsupported codec!\n");
         return -1; // Codec not found
     }
 
     // Open codec
-    if(avcodec_open(pCodecCtx, pCodec)<0)
+    if (avcodec_open(pCodecCtx, pCodec)<0)
         return -1; // Could not open codec
 
 
@@ -79,7 +79,7 @@ int Source::ffmpeg_init(){
         SWS_BICUBIC,
         NULL, NULL, NULL);
 
-    if(img_convert_ctx == NULL) {
+    if (img_convert_ctx == NULL) {
         fprintf(stderr, "[Source::ffmpeg_init] Cannot initialize the image conversion context!\n");
         return 1;
     }
@@ -91,22 +91,19 @@ int Source::ffmpeg_init(){
 
 
 
-int Source::ffmpeg_decode_frame(){
-
-
-
+int Source::ffmpeg_decode_frame() {
 
     i=0;
     while(av_read_frame(pFormatCtx, &packet)>=0) {
         // Is this a packet from the video stream?
-        if(packet.stream_index==videoStream) {
+        if (packet.stream_index==videoStream) {
             // Decode video frame
             avcodec_decode_video(pCodecCtx, pFrame, &frameFinished,
             packet.data, packet.size);
 
             
             // Did we get a video frame?
-            if(frameFinished) {
+            if (frameFinished) {
 
 
 

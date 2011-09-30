@@ -1,7 +1,7 @@
 #include "layer.hxx"
 
 
-void Layer::init_render(){
+void Layer::init_render() {
     glGenTextures( 1, &(this->texture) );
     glBindTexture( GL_TEXTURE_2D, texture );
     glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
@@ -14,7 +14,7 @@ void Layer::init_render(){
 }
 
 
-void Layer::render(){
+void Layer::render() {
     if (!this->_ready) { return; }
     
     glPushMatrix();
@@ -27,7 +27,7 @@ void Layer::render(){
     glScalef(info.sx,info.sy,info.sz);
 
     //set blending mode
-    switch (info.blending){
+    switch (info.blending) {
         case 1: //inverse alpha
             glBlendFunc (GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA); break;
         case 0:
@@ -57,9 +57,9 @@ void Layer::render(){
     glPopMatrix();
 }
 
-void Layer::close_render(){
+void Layer::close_render() {
     this->_ready = false;
-    if( this->texture ){
+    if (this->texture) {
         glDeleteTextures(1, &(this->texture));
         this->texture = 0;
     }

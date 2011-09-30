@@ -1,42 +1,31 @@
 #include "layer.hxx"
 
-Layer::Layer(){
+Layer::Layer() {
     this->_ready = false;
     this->_texture_ready = false;
 
     this->info.id=-1;
     
-    this->info.r=1;
-    this->info.g=1;
-    this->info.b=1;
-    this->info.a=1;
+    this->info.r=1; this->info.g=1; this->info.b=1; this->info.a=1;
     
-    this->info.width=0;
-    this->info.height=0;
+    this->info.width=0; this->info.height=0;
     
-    this->info.tx=0;
-    this->info.ty=0;
-    this->info.tz=0;
-    
-    this->info.rx=0;
-    this->info.ry=0;
-    this->info.rz=0;
-    
-    this->info.sx=1;
-    this->info.sy=1;
-    this->info.sz=1;
+    this->info.tx=0; this->info.ty=0; this->info.tz=0;
+    this->info.rx=0; this->info.ry=0; this->info.rz=0;
+    this->info.sx=1; this->info.sy=1; this->info.sz=1;
     
     this->info.blending=0;
+    
     this->source=0;
 }
 
 
-Layer::~Layer(){
+Layer::~Layer() {
     this->close_render();
 }
 
 
-void Layer::set_source(Source* _source){
+void Layer::set_source(Source* _source) {
     this->close_render();
     this->source = _source;
 
