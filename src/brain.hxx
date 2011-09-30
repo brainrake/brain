@@ -36,6 +36,8 @@ private:
 
     void step();
 
+    sf::Clock clock;
+
 public:
 
     Brain();
@@ -46,6 +48,9 @@ public:
     void add_layer(Layer* layer);
 
     void input();
+
+    double time;
+    double delta;
 
     friend class Layer;
     friend class Source;

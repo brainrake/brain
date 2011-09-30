@@ -59,28 +59,19 @@ void Brain::render() {
 
 
 void Brain::render_fps() {
-    static sf::Clock Clock;
-    static double time=0;
-    static double fps=0;
-
-    static int cnt=0;
-    cnt++;
-
-    if(cnt==10){
-        cnt=0;
-        double time2=Clock.GetElapsedTime();
-        double dif=time2-time;
-        time=time2;
-        fps=10/dif;
-    }
-
+    static int i = 0;
+    static double d = 0;
+    static double fps = 0;
+    if( i == 100){  fps = 100/d; d = 0; i = 0; }
+    d += this->delta;
+    i++;
 
     char str[255];
-    sprintf(str,"%03.2f fps",fps);
-    sf::String Text;
-    Text.SetText(str);
-    Text.SetColor(sf::Color(255, 255, 255));
-    window->Draw(Text);
+    sprintf(str, "%03.2f fps", fps);
+    sf::String text;
+    text.SetText(str);
+    text.SetColor(sf::Color(255, 255, 255));
+    window->Draw(text);
 }
 
 

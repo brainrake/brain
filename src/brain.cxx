@@ -30,6 +30,10 @@ void Brain::run(){
 
 
 void Brain::step(){
+    double t = clock.GetElapsedTime();
+    this->delta = t - this->time;
+    this->time = t;
+    
     this->input();
     this->render();
 }
