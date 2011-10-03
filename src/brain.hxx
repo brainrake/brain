@@ -4,16 +4,19 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+
 #include "layer.hxx"
 #include "source.hxx"
 
+class Layer;
+class Source;
 
 
 #define MAX_LAYERS 16
 #define MAX_SOURCES 16
 
 
-class Layer;
+
 
 
 struct BrainInfo{

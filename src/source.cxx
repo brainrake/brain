@@ -4,14 +4,20 @@
 #include <stdio.h>
 
 
-Source::Source() {
+void Source::init() {
     this->_stop = false;
+    info.title[0] = 0;
+    
     info.height = 0;
     info.width = 0;
-    info.title[0] = 0;
-    this->buf_front=0;
-    this->buf_back=0;
+    
+    this->buf_front = 0;
+    this->buf_back = 0;
     this->filename = NULL;
+
+    this->info.fps = 25;
+
+    this->_last_frame_time = 0;
 
     //fps
     time=0;
@@ -21,6 +27,8 @@ Source::Source() {
 
 
 Source::Source(char* _filename) {
+    this->init();
+    
     this->_stop = false;
     info.height=0;
     info.width=0;
@@ -46,10 +54,12 @@ Source::Source(char* _filename) {
     //start thread
     pthread_attr_t attr;
     pthread_attr_init(&attr);
+    /*
     sched_param schedparam;
     schedparam.sched_priority = -10;
     int ret = pthread_attr_setschedparam(&attr, &schedparam);
     printf("ret %d\n",ret);
+    */
 
     if ( ! pthread_create(&(this->thread), &attr, Source::thread_start, (void *)this) ) {
         printf("[Source::Source] Created source thread: %s\n",info.title);
@@ -126,7 +136,22 @@ void Source::log_fps() {
 }
 
 
-//called from main thread
+//
+// methods called from render thread
+//
+
+
+/// Sync framerate.
+/// Called from render thread.
+void Source::next_frame() {
+    if ((brain->time - this->_last_frame_time) > (1/this->info.fps)) {
+        this->_last_frame_time = this->_last_frame_time + 1/this->info.fps;
+        this->swap_buffers();
+    }
+}
+
+
+//called from render thread via next_render_frame()
 void Source::swap_buffers() {
     void* buf;
     buf = this->buf_back;

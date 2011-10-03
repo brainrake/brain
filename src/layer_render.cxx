@@ -40,8 +40,6 @@ void Layer::render() {
     glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, this->source->info.width, this->source->info.height, GL_RGBA, GL_UNSIGNED_BYTE, this->source->buf_front);
     glEnable(GL_TEXTURE_2D);
 
-    this->step_frame();
-
     //TODO: store this
     float aspect = this->source->info.width / (float) this->source->info.height;
 

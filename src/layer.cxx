@@ -37,19 +37,9 @@ void Layer::set_source(Source* _source) {
         this->info.height = this->source->info.height;
         this->info.width  = this->source->info.width;
 
-        this->_last_frame_time = this->brain->time;
-        
         printf("Layer %d: set_source: %s\n", this->info.id, source->info.title);
         
         this->init_render();
     }
 }
 
-
-//if the time is right, signal the decoding thread that the frame has been used
-void Layer::step_frame() {
-    if ((brain->time - this->_last_frame_time) > (1/this->info.fps)) {
-        this->_last_frame_time = this->_last_frame_time + 1/this->info.fps;
-        this->source->swap_buffers();
-    }
-}

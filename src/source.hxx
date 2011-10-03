@@ -14,20 +14,32 @@ extern "C" {
 }
 
 
+#include "brain.hxx"
+
+class Brain;
+
+
 struct SourceInfo{
     GLuint id;
     char title[64];
+    
     GLuint width;
     GLuint height;
+
+    double fps;
+    
     unsigned long int position;
 };
 
 
 class Source{
 private:
+    Brain* brain;
+
     SourceInfo info;
     char* filename;
 
+    void init();
     void set_title(char* _filename);
 
     bool _stop;
@@ -60,6 +72,8 @@ private:
     struct SwsContext *img_convert_ctx;
 
 //fps
+    double _last_frame_time;
+
     sf::Clock Clock;
     double time;
     double fps;
@@ -67,7 +81,6 @@ private:
     void log_fps();
   
 public:
-    Source();
     Source(char* _filename);
     ~Source();
     
@@ -75,6 +88,8 @@ public:
     void pause();
     void seek(unsigned long int _position);
     void set_play_mode(unsigned char play_mode);
+
+    void next_frame();
 
     friend class Brain;
     friend class Layer;
