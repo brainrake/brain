@@ -1,6 +1,8 @@
 #ifndef __BRAIN_HXX__
 #define __BRAIN_HXX__
 
+#include <GL/glew.h>
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 

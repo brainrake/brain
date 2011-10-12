@@ -2,8 +2,6 @@
 #define __LAYER_HXX__
 
 #include <pthread.h>
-#include <GL/gl.h>
-
 
 #include "brain.hxx"
 #include "source.hxx"

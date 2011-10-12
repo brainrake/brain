@@ -7,6 +7,7 @@ brain is a vj tool
 dependencies:
 
 - OpenGL
+- glew
 - ffmpeg
 - pthreads
 - SFML - for windowing and input
@@ -22,7 +23,7 @@ building
 
 on debian-based systems (tested on ubuntu 10.10)::
 
-    sudo apt-get install scons libgl1-mesa-dev libglu1-mesa-dev libsfml-dev libavcodec-dev libavformat-dev libswscale-dev
+    sudo apt-get install scons libgl1-mesa-dev libglu1-mesa-dev libsfml-dev libavcodec-dev libavformat-dev libswscale-dev libglew1.5-dev
     scons
 
 
@@ -31,4 +32,4 @@ running
 
 ::
 
-    ./brain
+    ./brain <video_file> [<video_file>]...

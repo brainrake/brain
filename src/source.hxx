@@ -1,8 +1,9 @@
 #ifndef __SOURCE_HXX__
 #define __SOURCE_HXX__
 
+#include "brain.hxx"
+
 #include <string>
-#include <GL/gl.h>
 #include <pthread.h>
 
 #include <SFML/Window.hpp>
@@ -14,7 +15,6 @@ extern "C" {
 }
 
 
-#include "brain.hxx"
 
 class Brain;
 

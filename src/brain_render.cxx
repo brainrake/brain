@@ -14,6 +14,18 @@ void Brain::init_render() {
     //create window
     window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "brain::output",sf::Style::Close, Settings);
 
+    glewInit();
+    GLenum err = glewInit();
+    if (GLEW_OK != err)
+    {
+        /* Problem: glewInit failed, something is seriously wrong. */
+        printf("glewInit failed, aborting.\n");
+        exit (1);
+    }
+    printf("Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+    printf("OpenGL version %s supported\n", glGetString(GL_VERSION));
+
+
     //preserve state when drawing via SFML
     window->PreserveOpenGLStates(true);
     
