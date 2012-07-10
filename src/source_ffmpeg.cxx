@@ -6,16 +6,18 @@ int Source::ffmpeg_init() {
     static pthread_mutex_t init_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock (&init_mutex);
 ////
-    
+
     av_register_all();
 
     // Open video file
-    if (av_open_input_file(&pFormatCtx, this->filename, NULL, 0, NULL)!=0)
-    return -1; // Couldn't open file
+    if (avformat_open_input(&pFormatCtx, this->filename, NULL, NULL) !=0 ) {
+        return -1; // Couldn't open file
+    }
 
     // Retrieve stream information
-    if (av_find_stream_info(pFormatCtx)<0)
-    return -1; // Couldn't find stream information
+    if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
+        return -1; // Couldn't find stream information
+    }
 
     // Dump information about file onto standard error
     //printf("source %d \n",info.id);
@@ -24,7 +26,7 @@ int Source::ffmpeg_init() {
     // Find the first video stream
     videoStream=-1;
     for (i=0; i<pFormatCtx->nb_streams; i++) {
-        if (pFormatCtx->streams[i]->codec->codec_type==CODEC_TYPE_VIDEO) {
+        if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
             videoStream=i;
             break;
         }
@@ -43,7 +45,7 @@ int Source::ffmpeg_init() {
     }
 
     // Open codec
-    if (avcodec_open(pCodecCtx, pCodec)<0)
+    if (avcodec_open2(pCodecCtx, pCodec, NULL)<0)
         return -1; // Could not open codec
 
 
@@ -52,7 +54,7 @@ int Source::ffmpeg_init() {
 
     // Allocate video frame
     pFrame=avcodec_alloc_frame();
-    
+
 
 
 
@@ -60,7 +62,7 @@ int Source::ffmpeg_init() {
 
     buf_front=(void*)malloc(4*this->info.width*this->info.height);
     buf_back=(void*)malloc(4*this->info.width*this->info.height);
-    
+
 
 
     pthread_mutex_unlock (&init_mutex);
@@ -98,10 +100,10 @@ int Source::ffmpeg_decode_frame() {
         // Is this a packet from the video stream?
         if (packet.stream_index==videoStream) {
             // Decode video frame
-            avcodec_decode_video(pCodecCtx, pFrame, &frameFinished,
-            packet.data, packet.size);
+            avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished,
+            &packet);
 
-            
+
             // Did we get a video frame?
             if (frameFinished) {
 
