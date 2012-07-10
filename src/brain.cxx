@@ -31,7 +31,7 @@ void Brain::run() {
 
 void Brain::step() {
     //set up 'delta' and 'time' variables
-    double t = clock.GetElapsedTime();
+    double t = clock.getElapsedTime().asMicroseconds();
     this->delta = t - this->time;
     this->time = t;
     

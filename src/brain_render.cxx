@@ -6,13 +6,13 @@
 
 void Brain::init_render() {
     //display settings
-    sf::WindowSettings Settings;
-    Settings.DepthBits = 24;
-    Settings.StencilBits = 8;
+    sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
     //Settings.AntialiasingLevel = 2;
 
     //create window
-    window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "brain::output",sf::Style::Close, Settings);
+    window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "brain::output",sf::Style::Close, settings);
 
     glewInit();
     GLenum err = glewInit();
@@ -27,9 +27,9 @@ void Brain::init_render() {
 
 
     //preserve state when drawing via SFML
-    window->PreserveOpenGLStates(true);
-    
-    window->SetFramerateLimit(200);
+    //window->preserveOpenGLStates(true);
+
+    window->setFramerateLimit(200);
 
     // Set color and depth clear value
     glClearDepth(1.0f);
@@ -52,7 +52,7 @@ void Brain::init_render() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    window->Display();
+    window->display();
 }
 
 
@@ -66,7 +66,7 @@ void Brain::render() {
 
     this->render_fps();
 
-    window->Display();
+    window->display();
 }
 
 
@@ -80,10 +80,9 @@ void Brain::render_fps() {
 
     char str[255];
     sprintf(str, "%03.2f fps", fps);
-    sf::String text;
-    text.SetText(str);
-    text.SetColor(sf::Color(255, 255, 255));
-    window->Draw(text);
+    sf::Text text(str);
+    text.setColor(sf::Color(255, 255, 255));
+    window->draw(text);
 }
 
 

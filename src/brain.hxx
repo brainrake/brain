@@ -28,7 +28,7 @@ struct BrainInfo{
 class Brain{
 private:
 
-    BrainInfo info; 
+    BrainInfo info;
 
     Layer* layers[MAX_LAYERS];
     Source* sources[MAX_SOURCES];

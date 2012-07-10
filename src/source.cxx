@@ -7,10 +7,10 @@
 void Source::init() {
     this->_stop = false;
     info.title[0] = 0;
-    
+
     info.height = 0;
     info.width = 0;
-    
+
     this->buf_front = 0;
     this->buf_back = 0;
     this->filename = NULL;
@@ -28,17 +28,17 @@ void Source::init() {
 
 Source::Source(char* _filename) {
     this->init();
-    
+
     this->_stop = false;
     info.height=0;
     info.width=0;
     info.title[0] = 0;
     this->buf_front=0;
     this->buf_back=0;
-    
+
     this->filename = new char[strlen(_filename)+1];
     strcpy(this->filename, _filename);
-    
+
     //set title
     this->set_title(_filename);
 
@@ -127,7 +127,7 @@ void Source::log_fps() {
 
     if (cnt>=50) {
         cnt=0;
-        double time2=Clock.GetElapsedTime();
+        double time2=Clock.getElapsedTime().asMicroseconds();
         double dif=time2-time;
         time=time2;
         fps=50.0/dif;
