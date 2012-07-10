@@ -21,9 +21,9 @@ build system:
 building
 --------
 
-on debian-based systems (tested on ubuntu 10.10)::
+after installing dependencies, run
+::
 
-    sudo apt-get install scons libgl1-mesa-dev libglu1-mesa-dev libsfml-dev libavcodec-dev libavformat-dev libswscale-dev libglew1.5-dev
     scons
 
 
