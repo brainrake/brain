@@ -8,9 +8,9 @@ dependencies:
 
 - OpenGL
 - glew
+- glfw
 - ffmpeg
 - pthreads
-- SFML - for windowing and input
 
 
 build system:
