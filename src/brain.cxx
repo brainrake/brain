@@ -3,15 +3,17 @@
 
 Brain::Brain() {
     _stop = false;
-    
+
+    this->clock.restart();
+
     for (unsigned int i=0; i<MAX_LAYERS; i++) {
         this->layers[i] = 0;
     }
-    
+
     for (unsigned int i=0; i<MAX_SOURCES; i++) {
         this->sources[i] = 0;
     }
-    
+
     this->init_render();
 }
 
@@ -30,11 +32,10 @@ void Brain::run() {
 
 
 void Brain::step() {
-    //set up 'delta' and 'time' variables
-    double t = clock.getElapsedTime().asMicroseconds();
+    sf::Int64 t = clock.getElapsedTime().asMicroseconds();
     this->delta = t - this->time;
     this->time = t;
-    
+
     this->input();
     this->render();
 

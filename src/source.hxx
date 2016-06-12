@@ -22,12 +22,12 @@ class Brain;
 struct SourceInfo{
     GLuint id;
     char title[64];
-    
+
     GLuint width;
     GLuint height;
 
     double fps;
-    
+
     unsigned long int position;
 };
 
@@ -74,16 +74,16 @@ private:
 //fps
     double _last_frame_time;
 
-    sf::Clock Clock;
+    sf::Clock clock;
     double time;
     double fps;
     int cnt;
     void log_fps();
-  
+
 public:
     Source(char* _filename);
     ~Source();
-    
+
     void play();
     void pause();
     void seek(unsigned long int _position);

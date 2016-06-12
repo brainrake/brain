@@ -94,6 +94,7 @@ void Source::set_title(char* _filename) {
 
 void* Source::thread_start(void* _source) {
     Source* source=(Source*) _source;
+    source->clock.restart();
     source->run();
     printf("[Source::thread_start] Thread finished\n");
 }
@@ -127,10 +128,10 @@ void Source::log_fps() {
 
     if (cnt>=50) {
         cnt=0;
-        double time2=Clock.getElapsedTime().asMicroseconds();
+        double time2=clock.getElapsedTime().asMicroseconds();
         double dif=time2-time;
         time=time2;
-        fps=50.0/dif;
+        fps=50 * 10000000.0/((double)dif);
         printf("%03.2f fps  %s\n",fps,this->info.title);
     }
 }

@@ -72,17 +72,20 @@ void Brain::render() {
 
 void Brain::render_fps() {
     static int i = 0;
-    static double d = 0;
+    static sf::Int64 d = 0;
     static double fps = 0;
-    if (i == 100) { fps = 100/d; d = 0; i = 0; }
+    if (i == 100) { fps = 100 * 1000000/((double) d); d = 0; i = 0; }
     d += this->delta;
     i++;
 
     char str[255];
     sprintf(str, "%03.2f fps", fps);
-    sf::Text text(str);
-    text.setColor(sf::Color(255, 255, 255));
-    window->draw(text);
+    //sf::Font font;
+    //font.loadFromFile("arial.ttf");
+    //sf::Text text = sf::Text();
+    //text.setString(str);//, font);
+    //text.setColor(sf::Color(255, 255, 255));
+    //window->draw(text);
 }
 
 

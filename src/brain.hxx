@@ -57,8 +57,8 @@ public:
 
     void input();
 
-    double time;
-    double delta;
+    sf::Int64 time;
+    sf::Int64 delta;
 
     friend class Layer;
     friend class Source;
